@@ -1,15 +1,13 @@
-package com.onlinehotelreservations.controller.authentication;
+package com.onlinehotelreservations.controller;
 
+import com.onlinehotelreservations.DTOs.authentication.AuthTokenDTO;
+import com.onlinehotelreservations.DTOs.authentication.LoginDTO;
 import com.onlinehotelreservations.config.TokenProvider;
-import com.onlinehotelreservations.controller.authentication.DTO.AuthTokenDTO;
-import com.onlinehotelreservations.controller.authentication.DTO.LoginDTO;
-import com.onlinehotelreservations.controller.authentication.DTO.RegisterDTO;
-import com.onlinehotelreservations.controller.authentication.exception.PasswordLoginFailedException;
-import com.onlinehotelreservations.controller.user.DTO.UserDTO;
 import com.onlinehotelreservations.controller.user.UserMapper;
-import com.onlinehotelreservations.service.AuthService;
-import com.onlinehotelreservations.service.UserService;
-import com.onlinehotelreservations.shared.model.ApiData;
+import com.onlinehotelreservations.exceptions.authentication.PasswordLoginFailedException;
+import com.onlinehotelreservations.mapper.authentication.AuthenticationMapper;
+import com.onlinehotelreservations.services.AuthService;
+import com.onlinehotelreservations.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,7 +18,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,7 +31,6 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final TokenProvider jwtTokenUtil;
-    private final AuthenticationMapper authenticationMapper;
     private final UserMapper userMapper;
     private final UserService userService;
     private final AuthService authenticationService;
@@ -48,20 +48,11 @@ public class AuthenticationController {
                 );
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 final String token = jwtTokenUtil.generateToken(authentication);
-                return ResponseEntity.ok(new AuthTokenDTO(this.userMapper.toUserDTO(this.userService.getUserByEmail(login.getEmail())), token));
+                return new ResponseEntity<AuthTokenDTO>(new AuthTokenDTO(this.userMapper.toUserDTO(this.userService.getUserByEmail(login.getEmail())), token), HttpStatus.OK);
             } catch (Exception e) {
                 throw new PasswordLoginFailedException();
             }
         }
         throw new UsernameNotFoundException("Login failed");
     }
-
-    @PostMapping("/register")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public ApiData<UserDTO> register(@RequestBody @Validated RegisterDTO registerDTO) {
-        return new ApiData<>(this.userMapper.toUserDTO(this.userService.addNewUser(
-                this.authenticationMapper.toUserEntity(registerDTO)
-        )));
-    }
-
 }

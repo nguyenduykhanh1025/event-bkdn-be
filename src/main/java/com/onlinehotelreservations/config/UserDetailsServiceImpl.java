@@ -1,9 +1,9 @@
 package com.onlinehotelreservations.config;
 
-import com.onlinehotelreservations.controller.authentication.exception.EmailLoginFailedException;
-import com.onlinehotelreservations.entity.RoleEntity;
-import com.onlinehotelreservations.entity.UserEntity;
-import com.onlinehotelreservations.repository.UserRepository;
+import com.onlinehotelreservations.entities.RoleEntity;
+import com.onlinehotelreservations.entities.UserEntity;
+import com.onlinehotelreservations.repositories.RoleRepository;
+import com.onlinehotelreservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +21,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -28,18 +31,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (userOpt.isPresent()) {
 
-            UserEntity emailEntity = userOpt.get();
+            UserEntity userEntity = userOpt.get();
 
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-            Set<RoleEntity> roles = emailEntity.getRoleEntities();
-
-            for (RoleEntity role : roles) {
-                grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+            Optional<RoleEntity> roleEntityOpt = roleRepository.findById(userEntity.getRoleId());
+            RoleEntity roleEntity = new RoleEntity();
+            if (roleEntityOpt.isPresent()) {
+                roleEntity = roleEntityOpt.get();
             }
+            grantedAuthorities.add(new SimpleGrantedAuthority(roleEntity.getName()));
 
             return new org.springframework.security.core.userdetails.User(
-                    emailEntity.getEmail(), emailEntity.getPassword(), grantedAuthorities);
+                    userEntity.getEmail(), userEntity.getPassword(), grantedAuthorities);
 
         }
 

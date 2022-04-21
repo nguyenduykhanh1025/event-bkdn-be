@@ -1,14 +1,14 @@
 package com.onlinehotelreservations.controller.user;
 
 import com.onlinehotelreservations.controller.user.DTO.UserDTO;
-import com.onlinehotelreservations.entity.UserEntity;
+import com.onlinehotelreservations.entities.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class UserMapper {
     public abstract UserEntity toUserEntity(UserDTO userDTO);
 

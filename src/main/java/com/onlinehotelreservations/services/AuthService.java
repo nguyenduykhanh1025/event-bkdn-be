@@ -1,9 +1,9 @@
-package com.onlinehotelreservations.service;
+package com.onlinehotelreservations.services;
 
-import com.onlinehotelreservations.controller.authentication.exception.EmailLoginFailedException;
-import com.onlinehotelreservations.controller.authentication.exception.InActiveStatusUserException;
-import com.onlinehotelreservations.entity.UserEntity;
-import com.onlinehotelreservations.repository.UserRepository;
+import com.onlinehotelreservations.entities.UserEntity;
+import com.onlinehotelreservations.exceptions.authentication.EmailLoginFailedException;
+import com.onlinehotelreservations.exceptions.authentication.InActiveStatusUserException;
+import com.onlinehotelreservations.repositories.UserRepository;
 import com.onlinehotelreservations.shared.enums.UserStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

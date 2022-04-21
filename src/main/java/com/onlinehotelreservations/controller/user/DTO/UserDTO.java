@@ -1,6 +1,6 @@
 package com.onlinehotelreservations.controller.user.DTO;
 
-import com.onlinehotelreservations.entity.RoleEntity;
+import com.onlinehotelreservations.entities.RoleEntity;
 import com.onlinehotelreservations.shared.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

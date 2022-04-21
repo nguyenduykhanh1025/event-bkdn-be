@@ -1,4 +1,4 @@
-package com.onlinehotelreservations.controller.authentication.exception;
+package com.onlinehotelreservations.exceptions.authentication;
 
 import com.onlinehotelreservations.shared.Response;
 import com.onlinehotelreservations.shared.model.ApiError;

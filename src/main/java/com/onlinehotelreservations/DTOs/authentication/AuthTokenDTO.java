@@ -1,4 +1,4 @@
-package com.onlinehotelreservations.controller.authentication.DTO;
+package com.onlinehotelreservations.DTOs.authentication;
 
 import com.onlinehotelreservations.controller.user.DTO.UserDTO;
 import lombok.AllArgsConstructor;

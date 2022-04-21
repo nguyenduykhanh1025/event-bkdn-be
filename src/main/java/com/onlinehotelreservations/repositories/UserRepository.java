@@ -1,12 +1,13 @@
-package com.onlinehotelreservations.repository;
+package com.onlinehotelreservations.repositories;
 
-import com.onlinehotelreservations.entity.UserEntity;
+import com.onlinehotelreservations.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {

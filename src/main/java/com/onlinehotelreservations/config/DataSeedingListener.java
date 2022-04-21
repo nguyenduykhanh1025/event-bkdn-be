@@ -1,9 +1,9 @@
 package com.onlinehotelreservations.config;
 
-import com.onlinehotelreservations.entity.RoleEntity;
-import com.onlinehotelreservations.entity.UserEntity;
-import com.onlinehotelreservations.repository.RoleRepository;
-import com.onlinehotelreservations.repository.UserRepository;
+import com.onlinehotelreservations.entities.RoleEntity;
+import com.onlinehotelreservations.entities.UserEntity;
+import com.onlinehotelreservations.repositories.RoleRepository;
+import com.onlinehotelreservations.repositories.UserRepository;
 import com.onlinehotelreservations.shared.enums.Role;
 import com.onlinehotelreservations.shared.enums.UserStatus;
 import io.jsonwebtoken.Jwts;
@@ -17,8 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 @Configuration
@@ -43,12 +41,13 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
     private void addUserIfMissing(String username, String password, Role... roles) {
         if (!userRepository.findByEmail(username).isPresent()) {
 
-            Set<RoleEntity> roleIsExists = new HashSet<>();
+            RoleEntity roleIsExists = new RoleEntity();
             for (Role role : roles) {
-                roleIsExists.add(roleRepository.findByName(role.toString()));
+                roleIsExists = roleRepository.findByName(role.toString());
             }
             userRepository.save(UserEntity.builder().email(username).password(new BCryptPasswordEncoder().encode(password))
-                    .roleEntities(roleIsExists)
+
+                    .roleId(roleIsExists.getId())
                     .firstName("khanh")
                     .lastName("nguyen")
                     .phone("0382189922")
@@ -64,7 +63,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         addRoleIfMissing(Role.ROLE_ADMIN);
         addRoleIfMissing(Role.ROLE_USER);
         addUserIfMissing("khanh1025@gmail.com", "123456789aaA", Role.ROLE_USER);
-        addUserIfMissing("khanhadmin1025@gmail.com", "123456789aaA", Role.ROLE_USER, Role.ROLE_ADMIN);
+        addUserIfMissing("khanhadmin1025@gmail.com", "123456789aaA", Role.ROLE_USER);
 
         for (int i = 0; i < 15; ++i) {
             String username = "khanh1025" + i + "@gmail.com";

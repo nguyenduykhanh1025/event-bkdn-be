@@ -1,4 +1,4 @@
-package com.onlinehotelreservations.controller.authentication.exception;
+package com.onlinehotelreservations.exceptions.authentication;
 
 public class InActiveStatusUserException extends RuntimeException {
     public InActiveStatusUserException(String username) {

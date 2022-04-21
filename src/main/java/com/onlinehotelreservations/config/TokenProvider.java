@@ -1,7 +1,7 @@
 package com.onlinehotelreservations.config;
 
-import com.onlinehotelreservations.entity.UserEntity;
-import com.onlinehotelreservations.repository.UserRepository;
+import com.onlinehotelreservations.entities.UserEntity;
+import com.onlinehotelreservations.repositories.UserRepository;
 import com.onlinehotelreservations.shared.Constants;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
