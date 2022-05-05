@@ -48,9 +48,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             userRepository.save(UserEntity.builder().email(username).password(new BCryptPasswordEncoder().encode(password))
 
                     .roleId(roleIsExists.getId())
-                    .firstName("khanh")
-                    .lastName("nguyen")
-                    .phone("0382189922")
+                    .fullName("Khanh nguyen")
+                    .phoneNumber("0382189922")
                     .birthday(new Date())
                     .status(UserStatus.ACTIVE)
                     .build());

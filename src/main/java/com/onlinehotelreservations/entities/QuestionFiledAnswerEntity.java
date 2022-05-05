@@ -6,20 +6,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "roles")
-public class RoleEntity implements Serializable {
-
+@Table(name = "questions_filed_answers")
+public class QuestionFiledAnswerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private int participantEventId;
 
+    private int questionFiledId;
+
+    private int eventId;
+
+    private int participantId;
+
+    @Column(nullable = false)
+    private String answers;
 }

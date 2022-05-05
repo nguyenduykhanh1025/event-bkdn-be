@@ -6,20 +6,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "roles")
-public class RoleEntity implements Serializable {
-
+@Table(name = "question_select_options")
+public class QuestionSelectOptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private int questionFiledId;
 
+    @Column(nullable = false)
+    private String label;
+
+    @Column(nullable = false)
+    private String value;
 }
