@@ -2,20 +2,20 @@ package com.onlinehotelreservations.entities;
 
 import com.onlinehotelreservations.shared.enums.QuestionFiledType;
 import com.onlinehotelreservations.shared.enums.SexType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "questions_filed")
-public class QuestionFiledEntity {
+public class QuestionFiledEntity extends BaseAuthEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,4 +38,20 @@ public class QuestionFiledEntity {
 
     @Column(nullable = false)
     private String answersCorrect;
+
+    @Column(nullable = false)
+    protected String createdBy;
+
+    @Column(nullable = false)
+    protected String updatedBy;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
+    protected Date updatedAt = new Date();
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
+    protected Date createdAt = new Date();
 }

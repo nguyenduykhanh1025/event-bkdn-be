@@ -20,7 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class UserEntity implements Serializable {
+public class UserEntity extends BaseAuthEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,26 +50,29 @@ public class UserEntity implements Serializable {
     @Builder.Default
     private UserStatus status = UserStatus.ACTIVE;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date birthday;
 
     @Column(nullable = false)
     private int avatar;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    @Builder.Default
-    private Date createdAt = new Date();
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    @Builder.Default
-    private Date updatedAt = new Date();
-
-    @Column(nullable = false)
-    private int updatedBy;
-
     @Column(nullable = false)
     private boolean isActive;
+
+    @Column(nullable = true)
+    protected String createdBy;
+
+    @Column(nullable = true)
+    protected String updatedBy;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
+    protected Date updatedAt = new Date();
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
+    protected Date createdAt = new Date();
 }
