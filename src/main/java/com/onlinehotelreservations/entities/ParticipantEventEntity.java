@@ -20,7 +20,7 @@ public class ParticipantEventEntity extends BaseAuthEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int participantId;
+    private int userId;
 
     private int eventId;
 

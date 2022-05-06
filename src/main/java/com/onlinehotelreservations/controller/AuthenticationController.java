@@ -55,4 +55,9 @@ public class AuthenticationController {
         }
         throw new UsernameNotFoundException("Login failed");
     }
+
+    @PostMapping("/register-participant")
+    public ResponseEntity<AuthTokenDTO> registerParticipant(@RequestBody @Validated LoginDTO login) {
+        return null;
+    }
 }

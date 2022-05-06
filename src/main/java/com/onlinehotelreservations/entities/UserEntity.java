@@ -26,13 +26,13 @@ public class UserEntity extends BaseAuthEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int roleId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Column(nullable = false, unique = true)
@@ -59,6 +59,13 @@ public class UserEntity extends BaseAuthEntity implements Serializable {
 
     @Column(nullable = false)
     private boolean isActive;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
+
+    @Column(nullable = true)
+    private String infoDescription;
 
     @Column(nullable = true)
     protected String createdBy;
