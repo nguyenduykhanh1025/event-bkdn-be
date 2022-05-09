@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class PaginationMapper {
-  public PaginationResponseDTO toPaginationResponseDTO(List<?> items, int metaCurrentPage, int metaTotal, int metaPerPage) {
+  public PaginationResponseDTO toPaginationResponseDTO(List<?> items, int metaCurrentPage, Long metaTotal, int metaPerPage) {
     return PaginationResponseDTO.builder()
             .items(items)
             .metaPerPage(metaPerPage)

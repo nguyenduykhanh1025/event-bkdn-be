@@ -14,6 +14,6 @@ import java.util.List;
 public class PaginationResponseDTO {
   private List<?> items;
   private int metaCurrentPage;
-  private int metaTotal;
+  private Long metaTotal;
   private int metaPerPage;
 }

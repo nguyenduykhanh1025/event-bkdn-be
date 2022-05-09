@@ -3,6 +3,7 @@ package com.onlinehotelreservations.services;
 import com.onlinehotelreservations.entities.EventEntity;
 import com.onlinehotelreservations.repositories.EventRepository;
 import com.onlinehotelreservations.repositories.UserRepository;
+import com.onlinehotelreservations.shared.enums.EventStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,24 +19,40 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class EventService {
-  private final EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
-  public EventEntity create(EventEntity eventEntity) {
-    return this.eventRepository.save(eventEntity);
-  }
+    public EventEntity getByTitle(String title) {
+        return this.eventRepository.findByTitle(title).orElse(null);
+    }
 
-  public EventEntity getByTitle(String title) {
-    return this.eventRepository.findByTitle(title).orElse(null);
-  }
+    public Page<EventEntity> paginateEventIncoming(int page, int limit) {
+        Pageable pageableRequest = PageRequest.of(page, limit);
+        return this.eventRepository.findByStatusAndIsActive(EventStatus.INCOMING, true, pageableRequest);
+    }
 
-  public Page<EventEntity> paginate(int page, int limit) {
-    List<EventEntity> eventEntities = new ArrayList<>();
-    Pageable firstPageWithTwoElements = PageRequest.of(page, limit);
+    public Page<EventEntity> paginateEventsHappening(int page, int limit) {
+        Pageable pageableRequest = PageRequest.of(page, limit);
+        return this.eventRepository.findByStatusAndIsActive(EventStatus.HAPPENING, true, pageableRequest);
+    }
 
-    return this.eventRepository.findAll(firstPageWithTwoElements);
+    public Page<EventEntity> paginateEventsOver(int page, int limit) {
+        Pageable pageableRequest = PageRequest.of(page, limit);
+        return this.eventRepository.findByStatusAndIsActive(EventStatus.OVER, true, pageableRequest);
+    }
 
-//    pageEventEntities.get().forEach(eventEntity -> {
-//      System.out.println(eventEntity.getTitle());
-//    });
-  }
+    public EventEntity create(EventEntity eventEntity) {
+        eventEntity.setStatus(EventStatus.INCOMING);
+        eventEntity.setCreatedBy("ADMIN");
+
+        eventEntity = this.eventRepository.save(eventEntity);
+        return eventEntity;
+    }
+
+    public EventEntity update(EventEntity eventEntity) {
+        return this.eventRepository.save(eventEntity);
+    }
+
+    public EventEntity findById(int id) {
+        return this.eventRepository.findById(id).orElse(null);
+    }
 }

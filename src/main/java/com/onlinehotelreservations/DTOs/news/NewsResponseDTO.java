@@ -1,47 +1,36 @@
-package com.onlinehotelreservations.entities;
+package com.onlinehotelreservations.DTOs.news;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
-@Entity
-@Getter
-@Setter
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "news")
-public class NewsEntity extends BaseAuthEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Builder
+public class NewsResponseDTO {
     private int id;
 
-    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
     private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date postedAt;
 
-    @Column(nullable = false)
     private int countView;
 
-    @Column(nullable = false)
     private String imagesStr;
 
-    @Column(nullable = false)
-    @Builder.Default
-    private Boolean isActive = false;
-
-    @Column(nullable = false)
     protected String createdBy;
 
-    @Column(nullable = false)
     protected String updatedBy;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
